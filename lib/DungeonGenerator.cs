@@ -44,7 +44,8 @@ namespace GameaWeekRogueLike.dungeonGeneration
             }
 
             var rects = new List<Rect2>();
-            while (rects.Count <= _roomCount)
+            int threshold = _roomCount;
+            while (rects.Count <= threshold)
             {
                 // create a rect
                 int width = _random.Next(_minRoomSize, _maxRoomSize);
@@ -55,9 +56,10 @@ namespace GameaWeekRogueLike.dungeonGeneration
 
                 // check if it overlaps
                 bool validPlacement = true;
+                Rect2 rectBounds = rect.Grow(1);
                 foreach(Rect2 r in rects)
                 {
-                    if (rect.Intersects(r))
+                    if (rectBounds.Intersects(r))
                     {
                         validPlacement = false;
                     }
@@ -69,22 +71,76 @@ namespace GameaWeekRogueLike.dungeonGeneration
                     if (rects.Count == 1)
                     {
                         // join with corridoor
-                        int startX = (int)Math.Min(rects[0].Position.x, rect.Position.x);
-                        Rect2 r1 = new Rect2(startX, rect.Position.y, Math.Abs(
-                            rects[0].Position.x - rect.Position.x
-                        ), 3);
-                        ClearArea(grid, r1);
-                        rects.Add(r1);
+                        var corridoor = CreateCorridoor(rect, rects[0]);
+                        foreach(Rect2 r in corridoor)
+                        {
+                            ClearArea(grid, r);
+                        }
                     }
                     else if (rects.Count >= 1)
                     {
-
+                        var corridoor = CreateCorridoor(rect, rects[rects.Count - 1]);
+                        foreach(Rect2 r in corridoor)
+                        {
+                            ClearArea(grid, r);
+                        }
                     }
+                    // add it to array
+                    rects.Add(rect);
                 }
-                // add it to array
-                rects.Add(rect);
+                threshold --;
             }
+            AddTile(2, grid, rects[0]);
+            AddTile(3, grid, rects[rects.Count - 1]);
             return grid;
+        }
+        private List<Rect2> CreateCorridoor(Rect2 r1, Rect2 r2)
+        {
+            Vector2 r1Mid = r1.End - r1.Size / 2;
+            Vector2 r2Mid = r2.End - r2.Size / 2;
+
+            // randomly move vertical or horizontal first
+            if (_random.Next(1,2) == 1)
+            {
+                // horizontal
+                var targetVec = new Vector2(r2Mid.x, r1Mid.y);
+                int x1 = (int)Math.Min(r1Mid.x, targetVec.x);
+                int x2 = (int)Math.Max(r1Mid.x, targetVec.x);
+                int width = x2 - x1;
+                int height = 4;
+                Rect2 rect1 = new Rect2(x1, r1Mid.y, width, height);
+                
+                // vertical
+                int y1 = (int)Math.Min(targetVec.y, r2Mid.y);
+                int y2 = (int)Math.Max(targetVec.y, r2Mid.y);
+                int width2 = 4;
+                int height2 = y2 - y1;
+                Rect2 rect2 = new Rect2(x2, y1, width2, height2);
+                return new List<Rect2>(){rect1, rect2};
+            }
+            else
+            {
+                // vertical
+                var targetVec = new Vector2(r1Mid.x, r2Mid.y);
+                int y1 = (int)Math.Min(r1Mid.y, targetVec.y);
+                int y2 = (int)Math.Max(r1Mid.y, targetVec.y);
+                int width = 4;
+                int height = y2 - y1;
+                Rect2 rect1 = new Rect2(r1Mid.x, y1, width, height);
+
+                // horrizontal
+                int x1 = (int)Math.Min(targetVec.x, r2Mid.x);
+                int x2 = (int)Math.Max(targetVec.x, r2Mid.x);
+                int width2 = x2 - x1;
+                int height2 = 4;
+                Rect2 rect2 = new Rect2(x1, r1Mid.y, width2, height2);
+                return new List<Rect2>(){rect1, rect2};
+            }
+        }
+        private void AddTile(int tile, int[,] grid, Rect2 rect)
+        {
+            var midRect = rect.End - rect.Size / 2;
+            grid[(int)midRect.y, (int)midRect.x] = tile;
         }
         private void ClearArea(int[,] grid, Rect2 area)
         {
