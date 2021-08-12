@@ -107,13 +107,13 @@ namespace GameaWeekRogueLike.dungeonGeneration
                 int x1 = (int)Math.Min(r1Mid.x, targetVec.x);
                 int x2 = (int)Math.Max(r1Mid.x, targetVec.x);
                 int width = x2 - x1;
-                int height = 4;
+                int height = 3;
                 Rect2 rect1 = new Rect2(x1, r1Mid.y, width, height);
                 
                 // vertical
                 int y1 = (int)Math.Min(targetVec.y, r2Mid.y);
                 int y2 = (int)Math.Max(targetVec.y, r2Mid.y);
-                int width2 = 4;
+                int width2 = 3;
                 int height2 = y2 - y1;
                 Rect2 rect2 = new Rect2(x2, y1, width2, height2);
                 return new List<Rect2>(){rect1, rect2};
@@ -144,14 +144,35 @@ namespace GameaWeekRogueLike.dungeonGeneration
         }
         private void ClearArea(int[,] grid, Rect2 area)
         {
-            // clear an area on the grid
+            // clear an area on the grid also randomly add an item or something
             for (int y = (int)area.Position.y; y < (int)area.End.y; y++)
             {
                 for (int x = (int)area.Position.x; x < (int)area.End.x; x++)
                 {
-                    grid[y,x] = 1;
+                    var vec = new Vector2(x,y);
+                    if (vec.x > area.Position.x + 1
+                        && vec.y > area.Position.y + 1
+                        && vec.x < area.End.x -1
+                        && vec.y < area.End.y - 1
+                    )
+                    {
+                        AddEnemiesAndItems(grid, vec);
+                    }
+                    else
+                    {
+                        grid[(int)vec.y, (int)vec.x] = 1;
+                    }
+
                 }
             }
+        }
+        private void AddEnemiesAndItems(int[,] grid, Vector2 vec)
+        {
+            int roll = _random.Next(1, 100);
+            if (roll >=98) grid[(int)vec.y, (int)vec.x] = 4;
+            else if (roll >= 95) grid[(int)vec.y, (int)vec.x] = 5;
+            else if (roll >= 93) grid[(int)vec.y, (int)vec.x] = 6;
+            else grid[(int)vec.y, (int)vec.x] = 1;
         }
     }
 }
