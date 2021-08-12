@@ -1,0 +1,52 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://TitleScreen.cs" type="Script" id=1]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+margin_left = 382.0
+margin_top = 212.0
+margin_right = 731.0
+margin_bottom = 373.0
+
+[node name="VSplitContainer" type="VBoxContainer" parent="Panel"]
+margin_left = 6.0
+margin_top = 7.0
+margin_right = 343.0
+margin_bottom = 152.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StartButton" type="Button" parent="Panel/VSplitContainer"]
+margin_right = 337.0
+margin_bottom = 45.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "New Game"
+
+[node name="LoadGame" type="Button" parent="Panel/VSplitContainer"]
+margin_top = 49.0
+margin_right = 337.0
+margin_bottom = 95.0
+size_flags_vertical = 3
+text = "Load Game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="QuitButton" type="Button" parent="Panel/VSplitContainer"]
+margin_top = 99.0
+margin_right = 337.0
+margin_bottom = 145.0
+size_flags_vertical = 3
+text = "Quit"
