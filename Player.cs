@@ -6,7 +6,9 @@ namespace GameaWeekRogueLike.Entities
 {
     public class Player : Sprite
     {
-        private GameSettings settings;
+        [Signal]
+        public delegate void PlayerMoved();
+
         private Area2D _collisionAreaEast;
         private Area2D _collisionAreaSouth;
         private Area2D _collisionAreaWest;
@@ -29,6 +31,7 @@ namespace GameaWeekRogueLike.Entities
                 {
                     Position = new Vector2(Position.x + GameSettings.TileSize, Position.y);
                 }
+                EmitSignal("PlayerMoved");
             }
             else if (inputEvent.IsActionPressed("moveUp"))
             {
@@ -36,6 +39,7 @@ namespace GameaWeekRogueLike.Entities
                 {
                     Position = new Vector2(Position.x, Position.y - GameSettings.TileSize);
                 }
+                EmitSignal("PlayerMoved");
             }
             else if (inputEvent.IsActionPressed("moveLeft"))
             {
@@ -43,6 +47,7 @@ namespace GameaWeekRogueLike.Entities
                 {
                     Position = new Vector2(Position.x - GameSettings.TileSize, Position.y);
                 }
+                EmitSignal("PlayerMoved");
             }
             else if (inputEvent.IsActionPressed("moveDown"))
             {
@@ -50,6 +55,8 @@ namespace GameaWeekRogueLike.Entities
                 {
                     Position = new Vector2(Position.x, Position.y + GameSettings.TileSize);
                 }
+                EmitSignal("PlayerMoved");
+
             }
         }
     }

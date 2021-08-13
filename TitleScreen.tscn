@@ -10,17 +10,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="PanelContainer" parent="."]
 margin_left = 382.0
 margin_top = 212.0
 margin_right = 731.0
 margin_bottom = 373.0
 
 [node name="VSplitContainer" type="VBoxContainer" parent="Panel"]
-margin_left = 6.0
+margin_left = 7.0
 margin_top = 7.0
-margin_right = 343.0
-margin_bottom = 152.0
+margin_right = 342.0
+margin_bottom = 154.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
@@ -28,25 +28,15 @@ __meta__ = {
 }
 
 [node name="StartButton" type="Button" parent="Panel/VSplitContainer"]
-margin_right = 337.0
-margin_bottom = 45.0
+margin_right = 335.0
+margin_bottom = 71.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "New Game"
 
-[node name="LoadGame" type="Button" parent="Panel/VSplitContainer"]
-margin_top = 49.0
-margin_right = 337.0
-margin_bottom = 95.0
-size_flags_vertical = 3
-text = "Load Game"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="QuitButton" type="Button" parent="Panel/VSplitContainer"]
-margin_top = 99.0
-margin_right = 337.0
-margin_bottom = 145.0
+margin_top = 75.0
+margin_right = 335.0
+margin_bottom = 147.0
 size_flags_vertical = 3
 text = "Quit"
