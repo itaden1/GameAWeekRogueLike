@@ -83,6 +83,11 @@ namespace GameaWeekRogueLike.Entities
 
             }
         }
+        public void DestroySelf()
+        {
+            GD.Print("player destrucor called");
+            QueueFree();
+        }
     }
 }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using GameaWeekRogueLike.Settings;
 using GameaWeekRogueLike.dungeonGeneration;
 using GameaWeekRogueLike.Entities;
+using System;
 
 public class Map : TileMap
 {
@@ -19,6 +20,11 @@ public class Map : TileMap
 
     public override void _Ready()
     {
+        CreateMap();
+    }
+    public void CreateMap()
+    {
+        Visible = true;
         DungeonGenerator generator = new DungeonGenerator(
             GameSettings.TileSize,
             MapWidth,
@@ -45,6 +51,18 @@ public class Map : TileMap
                     SetCell(x, y, tile);
                     cellArray.Add(new Vector2(x, y));
                 }
+
+                if (grid[y,x] == 3)
+                {
+                    // goal
+                    var stairScene = (PackedScene)ResourceLoader.Load("res://Stairs.tscn");
+                    Sprite stair = (Sprite)stairScene.Instance();
+                    stair.Position = new Vector2(x * GameSettings.TileSize, y * GameSettings.TileSize);
+                    stair.Connect("StairsEntered", this, nameof(_on_StairEntered));
+                    AddChild(stair);
+                    stair.AddToGroup("ItemGroup");
+                }
+
                 if (grid[y,x] == 2)
                 {
                     var playerScene = (PackedScene)ResourceLoader.Load("res://Player.tscn");
@@ -56,44 +74,60 @@ public class Map : TileMap
                     Camera2D camera = new Camera2D();
                     camera.Current = true;
                     player.AddChild(camera);
-
-
+                    player.AddToGroup("PlayerGroup");
                 }
-                if (grid[y,x] == 3)
-                {
-                    // goal
-                    var treasureScene = (PackedScene)ResourceLoader.Load("res://Treasure.tscn");
-                    Sprite treasure = (Sprite)treasureScene.Instance();
-                    treasure.Position = new Vector2(x * GameSettings.TileSize, y * GameSettings.TileSize);
-                    AddChild(treasure);
 
-                }
+
                 if (grid[y,x] == 4)
                 {
                     enemyPositions.Add(new Vector2(x * GameSettings.TileSize, y * GameSettings.TileSize));
                 }
+
                 if (grid[y,x] == 5)
                 {
                     var jarScene = (PackedScene)ResourceLoader.Load("res://Jar.tscn");
                     Sprite jar = (Sprite)jarScene.Instance();
                     jar.Position = new Vector2(x * GameSettings.TileSize, y * GameSettings.TileSize);
                     AddChild(jar);
+                    jar.AddToGroup("ItemGroup");
                 }
+
                 if (grid[y,x] == 6)
                 {
                     var powerUpScene = (PackedScene)ResourceLoader.Load("res://PowerUp.tscn");
                     Sprite powerUp = (Sprite)powerUpScene.Instance();
                     powerUp.Position = new Vector2(x * GameSettings.TileSize, y * GameSettings.TileSize);
                     AddChild(powerUp);
+                    powerUp.AddToGroup("ItemGroup");
                 }
             }
         }
         UpdateBitmaskRegion();
         SpawnEnemies(enemyPositions);
     }
+
+    private void _on_StairEntered()
+    {
+        // destroy all enemies and pickups
+        GetTree().CallGroup("PlayerGroup", "DestroySelf");
+        GetTree().CallGroup("EnemyGroup", "DestroySelf");
+        GetTree().CallGroup("ItemGroup", "DestroySelf");
+
+        // clear tilemap
+        Clear();
+        RoomCount += 5;
+        Visible = false;
+        Timer timer = new Timer();
+        timer.WaitTime = 2;
+        timer.OneShot = true;
+        AddChild(timer);
+        timer.Connect("timeout", this, nameof(CreateMap));
+        timer.Start();
+        // regenerate level
+    }
+
     public void SpawnEnemies(List<Vector2> enemyPositions)
     {
-        GD.Print("heard signal");
         foreach(Vector2 pos in enemyPositions)
         {
             var enemyScene = (PackedScene)ResourceLoader.Load("res://Enemy.tscn");
@@ -101,6 +135,8 @@ public class Map : TileMap
             enemy.Position = pos;
             AddChild(enemy);
             enemy.NextPosition = pos;
+
+            enemy.AddToGroup("EnemyGroup");
         }
     }
 

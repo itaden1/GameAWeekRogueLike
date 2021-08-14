@@ -94,13 +94,17 @@ points = PoolVector2Array( 0, 0, 0, 0, 0, 32, 0, 32 )
 
 [node name="World" type="Node2D"]
 
-[node name="TileMap" type="TileMap" parent="."]
+[node name="TileMap" type="TileMap" parent="." groups=[
+"EnemyGroup",
+"ItemGroup",
+"PlayerGroup",
+]]
 tile_set = SubResource( 8 )
 cell_size = Vector2( 32, 32 )
 show_collision = true
 format = 1
 script = ExtResource( 3 )
-MapWidth = 60
+MapWidth = 30
 MapHeight = 30
 RoomCount = 4
 MaxRoomSize = 8
