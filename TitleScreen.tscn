@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://TitleScreen.cs" type="Script" id=1]
+[ext_resource path="res://assets/titlefont.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/btnfont.tres" type="DynamicFont" id=3]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -10,17 +12,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Panel" type="PanelContainer" parent="."]
+[node name="Panel" type="AspectRatioContainer" parent="."]
 margin_left = 382.0
 margin_top = 212.0
 margin_right = 731.0
 margin_bottom = 373.0
 
 [node name="VSplitContainer" type="VBoxContainer" parent="Panel"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 342.0
-margin_bottom = 154.0
+margin_left = 94.0
+margin_right = 255.0
+margin_bottom = 161.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
@@ -28,15 +29,50 @@ __meta__ = {
 }
 
 [node name="StartButton" type="Button" parent="Panel/VSplitContainer"]
-margin_right = 335.0
-margin_bottom = 71.0
+margin_right = 161.0
+margin_bottom = 78.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 0.533333, 0.533333, 0.533333, 1 )
+custom_colors/font_color_hover = Color( 0.862745, 0.862745, 0.862745, 1 )
 text = "New Game"
+flat = true
 
 [node name="QuitButton" type="Button" parent="Panel/VSplitContainer"]
-margin_top = 75.0
-margin_right = 335.0
-margin_bottom = 147.0
+margin_top = 82.0
+margin_right = 161.0
+margin_bottom = 161.0
 size_flags_vertical = 3
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 0.533333, 0.533333, 0.533333, 1 )
+custom_colors/font_color_hover = Color( 0.862745, 0.862745, 0.862745, 1 )
 text = "Quit"
+flat = true
+
+[node name="Title" type="Label" parent="."]
+margin_left = 287.586
+margin_top = 69.7942
+margin_right = 827.586
+margin_bottom = 204.794
+custom_fonts/font = ExtResource( 2 )
+text = "Wizards Treasure"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AspectRatioContainer" type="PanelContainer" parent="."]
+visible = false
+margin_left = 66.4307
+margin_top = 172.383
+margin_right = 1079.43
+margin_bottom = 396.383
+
+[node name="RichTextLabel" type="RichTextLabel" parent="AspectRatioContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1006.0
+margin_bottom = 217.0
+text = "The evil wizard Fladnag has stolen the kings treasure and hidden it in his wizardly tower...
+Not knowing what evils you will face you set off to retrieve the king's riches!"

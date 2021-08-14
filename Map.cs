@@ -2,6 +2,7 @@ using Godot;
 using System.Collections.Generic;
 using GameaWeekRogueLike.Settings;
 using GameaWeekRogueLike.dungeonGeneration;
+using GameaWeekRogueLike.Entities;
 
 public class Map : TileMap
 {
@@ -47,10 +48,11 @@ public class Map : TileMap
                 if (grid[y,x] == 2)
                 {
                     var playerScene = (PackedScene)ResourceLoader.Load("res://Player.tscn");
-                    Sprite player = (Sprite)playerScene.Instance();
+                    Player player = (Player)playerScene.Instance();
                     player.Position = new Vector2(x * GameSettings.TileSize, y * GameSettings.TileSize);
                     player.Name = "Player";
                     AddChild(player);
+                    player.NextPosition = player.Position;
                     Camera2D camera = new Camera2D();
                     camera.Current = true;
                     player.AddChild(camera);
@@ -95,9 +97,10 @@ public class Map : TileMap
         foreach(Vector2 pos in enemyPositions)
         {
             var enemyScene = (PackedScene)ResourceLoader.Load("res://Enemy.tscn");
-            Sprite enemy = (Sprite)enemyScene.Instance();
+            Enemy enemy = (Enemy)enemyScene.Instance();
             enemy.Position = pos;
             AddChild(enemy);
+            enemy.NextPosition = pos;
         }
     }
 

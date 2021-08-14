@@ -68,16 +68,7 @@ namespace GameaWeekRogueLike.dungeonGeneration
                 {
                     ClearArea(grid, rect);
                     // add corridoors
-                    if (rects.Count == 1)
-                    {
-                        // join with corridoor
-                        var corridoor = CreateCorridoor(rect, rects[0]);
-                        foreach(Rect2 r in corridoor)
-                        {
-                            ClearArea(grid, r);
-                        }
-                    }
-                    else if (rects.Count >= 1)
+                    if (rects.Count >= 1)
                     {
                         var corridoor = CreateCorridoor(rect, rects[rects.Count - 1]);
                         foreach(Rect2 r in corridoor)
@@ -108,14 +99,14 @@ namespace GameaWeekRogueLike.dungeonGeneration
                 int x2 = (int)Math.Max(r1Mid.x, targetVec.x);
                 int width = x2 - x1;
                 int height = 3;
-                Rect2 rect1 = new Rect2(x1, r1Mid.y, width, height);
+                Rect2 rect1 = new Rect2(x1 - 1, r1Mid.y, width + 3, height);
                 
                 // vertical
                 int y1 = (int)Math.Min(targetVec.y, r2Mid.y);
                 int y2 = (int)Math.Max(targetVec.y, r2Mid.y);
                 int width2 = 3;
                 int height2 = y2 - y1;
-                Rect2 rect2 = new Rect2(x2, y1, width2, height2);
+                Rect2 rect2 = new Rect2(targetVec.x, y1 - 1, width2, height2 + 3);
                 return new List<Rect2>(){rect1, rect2};
             }
             else
@@ -124,16 +115,16 @@ namespace GameaWeekRogueLike.dungeonGeneration
                 var targetVec = new Vector2(r1Mid.x, r2Mid.y);
                 int y1 = (int)Math.Min(r1Mid.y, targetVec.y);
                 int y2 = (int)Math.Max(r1Mid.y, targetVec.y);
-                int width = 4;
+                int width = 3;
                 int height = y2 - y1;
-                Rect2 rect1 = new Rect2(r1Mid.x, y1, width, height);
+                Rect2 rect1 = new Rect2(r1Mid.x, y1 - 1, width, height + 3);
 
                 // horrizontal
                 int x1 = (int)Math.Min(targetVec.x, r2Mid.x);
                 int x2 = (int)Math.Max(targetVec.x, r2Mid.x);
                 int width2 = x2 - x1;
-                int height2 = 4;
-                Rect2 rect2 = new Rect2(x1, r1Mid.y, width2, height2);
+                int height2 = 3;
+                Rect2 rect2 = new Rect2(x1 - 1, targetVec.y, width2 + 3, height2);
                 return new List<Rect2>(){rect1, rect2};
             }
         }
@@ -169,7 +160,7 @@ namespace GameaWeekRogueLike.dungeonGeneration
         private void AddEnemiesAndItems(int[,] grid, Vector2 vec)
         {
             int roll = _random.Next(1, 100);
-            if (roll >=98) grid[(int)vec.y, (int)vec.x] = 4;
+            if (roll >=96) grid[(int)vec.y, (int)vec.x] = 4;
             else if (roll >= 95) grid[(int)vec.y, (int)vec.x] = 5;
             else if (roll >= 93) grid[(int)vec.y, (int)vec.x] = 6;
             else grid[(int)vec.y, (int)vec.x] = 1;

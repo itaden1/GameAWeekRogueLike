@@ -102,7 +102,7 @@ format = 1
 script = ExtResource( 3 )
 MapWidth = 60
 MapHeight = 30
-RoomCount = 17
+RoomCount = 4
 MaxRoomSize = 8
 MinRoomSize = 5
 
