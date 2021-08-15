@@ -1,0 +1,50 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/titlefont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/btnfont.tres" type="DynamicFont" id=2]
+[ext_resource path="res://GameOver.cs" type="Script" id=3]
+
+[node name="YouWinScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
+margin_top = 118.0
+margin_right = 1024.0
+margin_bottom = 504.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AspectRatioContainer"]
+margin_left = 319.0
+margin_right = 705.0
+margin_bottom = 386.0
+
+[node name="Title" type="Label" parent="AspectRatioContainer/VBoxContainer"]
+margin_right = 386.0
+margin_bottom = 121.0
+custom_fonts/font = ExtResource( 1 )
+text = "Congratulations"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="AspectRatioContainer/VBoxContainer"]
+margin_top = 125.0
+margin_right = 386.0
+margin_bottom = 325.0
+size_flags_vertical = 3
+custom_fonts/normal_font = ExtResource( 2 )
+text = "After facing perilous challenges you have succesfully retrieved enough treasure to appease the king! "
+
+[node name="Button" type="Button" parent="AspectRatioContainer/VBoxContainer"]
+margin_top = 329.0
+margin_right = 386.0
+margin_bottom = 386.0
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0.368627, 0.368627, 0.368627, 1 )
+custom_colors/font_color_hover = Color( 0.862745, 0.862745, 0.862745, 1 )
+text = "Main Menu"
+flat = true

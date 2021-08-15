@@ -2,12 +2,11 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using GameaWeekRogueLike.Settings;
+using GameaWeekRogueLike.State;
+
 
 namespace GameaWeekRogueLike.Entities
 {
-    [Signal]
-    public delegate void EnemyMoved();
-
     public class Enemy : Sprite
     {
         [Export]
@@ -27,6 +26,9 @@ namespace GameaWeekRogueLike.Entities
 
             public Vector2 NextPosition;
             private Player player;
+            public int HP = 20;
+
+            private Node gameState;
         public override void _Ready()
         {
             _collisionAreaEast = (Area2D)GetNode("CollisionAreaEast");
@@ -36,7 +38,16 @@ namespace GameaWeekRogueLike.Entities
             player = (Player)GetParent().GetNode("Player");
 
             player.Connect("PlayerMoved", this, nameof(_on_PlayerMoved));
+            gameState = GetTree().Root.GetNode("GameState");
+        }
 
+        public void removeHP(int amount)
+        {
+            HP = HP - amount;
+            if (HP <= 0 )
+            {
+                QueueFree();
+            }
         }
 
         public override void _Process(float delta)
@@ -56,30 +67,41 @@ namespace GameaWeekRogueLike.Entities
         public void _on_PlayerMoved()
         {
             bool validChoice = false;
+            bool attacking = false;
             while (!validChoice)
             {
-                GD.Print("Fucck!");
                 List<int> _choices = new List<int>();
                 int playerDistance = (int)Position.DistanceTo(player.Position);
-                GD.Print($"D-{playerDistance}");
                 if (playerDistance < 5 * GameSettings.TileSize)
                 {
-                    if (Position.x < player.Position.x) _choices.Add(2);
-                    if (Position.x > player.Position.x) _choices.Add(3);
-                    if (Position.y < player.Position.y) _choices.Add(1);
-                    if (Position.y > player.Position.y) _choices.Add(0);
+                    if (Position.x < player.NextPosition.x) _choices.Add(2);
+                    if (Position.x > player.NextPosition.x) _choices.Add(3);
+                    if (Position.y < player.NextPosition.y) _choices.Add(1);
+                    if (Position.y > player.NextPosition.y) _choices.Add(0);
                 }
                 else 
                 {
                     _choices.AddRange(new List<int>(){0,1,2,3});
                 }
-                GD.Print(_choices.Count);
                 int _rnd = _random.Next(0, _choices.Count - 1);
                 int _choice = _choices[_rnd];
-                GD.Print(_choice);
+
                 if (_choice == (int)Direction.North)
                 {
-                    if (_collisionAreaNorth.GetOverlappingBodies().Count == 0)
+                    Godot.Collections.Array areas = _collisionAreaNorth.GetOverlappingAreas();
+                    foreach (Area2D a in areas)
+                    {
+                        if (a.GetParent().Name == "Player")
+                        {
+                            GD.Print("Atack p");
+                            NextPosition = new Vector2(Position.x, Position.y);
+                            Position = new Vector2(Position.x, Position.y - GameSettings.TileSize/2);
+                            attacking = true;
+                            (gameState as GameState).UpdatePlayerHP(-5);
+                            break;
+                        }
+                    }
+                    if (_collisionAreaNorth.GetOverlappingBodies().Count == 0 && !attacking)
                     {
                         NextPosition = new Vector2(Position.x, Position.y - GameSettings.TileSize);
                         validChoice = true;
@@ -87,7 +109,20 @@ namespace GameaWeekRogueLike.Entities
                 }
                 else if (_choice == (int)Direction.South)
                 {
-                    if (_collisionAreaSouth.GetOverlappingBodies().Count == 0)
+                    Godot.Collections.Array areas = _collisionAreaSouth.GetOverlappingAreas();
+                    foreach (Area2D a in areas)
+                    {
+                        if (a.GetParent().Name == "Player")
+                        {
+                            GD.Print("Atack p");
+                            NextPosition = new Vector2(Position.x, Position.y);
+                            Position = new Vector2(Position.x, Position.y + GameSettings.TileSize/2);
+                            attacking = true;
+                            (gameState as GameState).UpdatePlayerHP(-5);
+                            break;
+                        }
+                    }
+                    if (_collisionAreaSouth.GetOverlappingBodies().Count == 0 && !attacking)
                     {
                         NextPosition = new Vector2(Position.x, Position.y + GameSettings.TileSize);
                         validChoice = true;
@@ -95,7 +130,20 @@ namespace GameaWeekRogueLike.Entities
                 }
                 else if (_choice == (int)Direction.East)
                 {
-                    if (_collisionAreaEast.GetOverlappingBodies().Count == 0)
+                    Godot.Collections.Array areas = _collisionAreaEast.GetOverlappingAreas();
+                    foreach (Area2D a in areas)
+                    {
+                        if (a.GetParent().Name == "Player")
+                        {
+                            GD.Print("Atack p");
+                            NextPosition = new Vector2(Position.x, Position.y);
+                            Position = new Vector2(Position.x  + GameSettings.TileSize/2, Position.y);
+                            attacking = true;
+                            (gameState as GameState).UpdatePlayerHP(-5);
+                            break;
+                        }
+                    }
+                    if (_collisionAreaEast.GetOverlappingBodies().Count == 0 && !attacking)
                     {
                         NextPosition = new Vector2(Position.x + GameSettings.TileSize, Position.y);
                         validChoice = true;
@@ -103,7 +151,20 @@ namespace GameaWeekRogueLike.Entities
                 }
                 else if (_choice == (int)Direction.West)
                 {
-                    if (_collisionAreaWest.GetOverlappingBodies().Count == 0)
+                    Godot.Collections.Array areas = _collisionAreaWest.GetOverlappingAreas();
+                    foreach (Area2D a in areas)
+                    {
+                        if (a.GetParent().Name == "Player")
+                        {
+                            GD.Print("Atack p");
+                            NextPosition = new Vector2(Position.x, Position.y);
+                            Position = new Vector2(Position.x - GameSettings.TileSize/2, Position.y);
+                            (gameState as GameState).UpdatePlayerHP(-5);
+                            attacking = true;
+                            break;
+                        }
+                    }
+                    if (_collisionAreaWest.GetOverlappingBodies().Count == 0 && !attacking)
                     {
                         NextPosition = new Vector2(Position.x - GameSettings.TileSize, Position.y);
                         validChoice = true;

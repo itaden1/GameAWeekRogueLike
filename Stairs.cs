@@ -13,7 +13,7 @@ public class Stairs : Sprite
 
     public void _on_BodyEnteredStair(Area2D area)
     {
-        if (area.Name == "PlayerAreaMain")
+        if (area.Name == "PlayerHitBox")
         {
             EmitSignal("StairsEntered");
         }

@@ -1,11 +1,11 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/miniroguelike-8x8.png" type="Texture" id=1]
-[ext_resource path="res://PowerUp.cs" type="Script" id=2]
+[ext_resource path="res://Potion.cs" type="Script" id=2]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 1 )
-region = Rect2( 192, 128, 32, 32 )
+region = Rect2( 480, 256, 32, 32 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 8, 8 )

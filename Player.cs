@@ -2,6 +2,8 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using GameaWeekRogueLike.Settings;
+using GameaWeekRogueLike.State;
+
 
 namespace GameaWeekRogueLike.Entities
 {
@@ -21,7 +23,7 @@ namespace GameaWeekRogueLike.Entities
 
         [Export]
         public float Speed = 150;
-
+        public GameState gameState;
         public override void _Ready()
         {
             GD.Print("ready");
@@ -29,6 +31,7 @@ namespace GameaWeekRogueLike.Entities
             _collisionAreaSouth = (Area2D)GetNode("CollisionAreaSouth");
             _collisionAreaWest = (Area2D)GetNode("CollisionAreaWest");
             _collisionAreaNorth = (Area2D)GetNode("CollisionAreaNorth");
+            gameState = GetTree().Root.GetNode("GameState") as GameState;
 
         }
 
@@ -64,6 +67,9 @@ namespace GameaWeekRogueLike.Entities
                 if (enemies.Count > 0)
                 {
                     GD.Print("Atack");
+                    NextPosition = new Vector2(Position.x, Position.y);
+                    Position = new Vector2(Position.x + GameSettings.TileSize/2, Position.y);
+                    enemies[0].removeHP(gameState.PlayerAttackPower);
                 }
                 else if (_collisionAreaEast.GetOverlappingBodies().Count == 0)
                 {
@@ -82,9 +88,12 @@ namespace GameaWeekRogueLike.Entities
                         enemies.Add((Enemy)a.GetParent());
                     }
                 }
-                if (_collisionAreaNorth.GetOverlappingAreas().Count > 0)
+                if (enemies.Count > 0)
                 {
                     GD.Print("Atack");
+                    NextPosition = new Vector2(Position.x, Position.y);
+                    Position = new Vector2(Position.x, Position.y - GameSettings.TileSize/2);
+                    enemies[0].removeHP(gameState.PlayerAttackPower);
                 }
                 else if (_collisionAreaNorth.GetOverlappingBodies().Count == 0)
                 {
@@ -107,6 +116,9 @@ namespace GameaWeekRogueLike.Entities
                 if (enemies.Count > 0)
                 {
                     GD.Print("Atack");
+                    NextPosition = new Vector2(Position.x, Position.y);
+                    Position = new Vector2(Position.x - GameSettings.TileSize/2, Position.y);
+                    enemies[0].removeHP(gameState.PlayerAttackPower);
                 }
                 else if (_collisionAreaWest.GetOverlappingBodies().Count == 0)
                 {
@@ -128,6 +140,9 @@ namespace GameaWeekRogueLike.Entities
                 if (enemies.Count > 0)
                 {
                     GD.Print("Atack");
+                    NextPosition = new Vector2(Position.x, Position.y);
+                    Position = new Vector2(Position.x, Position.y + GameSettings.TileSize/2);
+                    enemies[0].removeHP(gameState.PlayerAttackPower);
                 }
                 else if (_collisionAreaSouth.GetOverlappingBodies().Count == 0)
                 {

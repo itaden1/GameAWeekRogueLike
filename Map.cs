@@ -24,6 +24,15 @@ public class Map : TileMap
     }
     public void CreateMap()
     {
+        // destroy all enemies and pickups if they exist
+        foreach (Node n in GetChildren())
+        {
+            n.QueueFree();
+        }
+
+        // clear tilemap
+        Clear();
+
         Visible = true;
         DungeonGenerator generator = new DungeonGenerator(
             GameSettings.TileSize,
@@ -85,16 +94,24 @@ public class Map : TileMap
 
                 if (grid[y,x] == 5)
                 {
-                    var jarScene = (PackedScene)ResourceLoader.Load("res://Jar.tscn");
-                    Sprite jar = (Sprite)jarScene.Instance();
-                    jar.Position = new Vector2(x * GameSettings.TileSize, y * GameSettings.TileSize);
-                    AddChild(jar);
-                    jar.AddToGroup("ItemGroup");
+                    var treasureScene = (PackedScene)ResourceLoader.Load("res://Treasure.tscn");
+                    Sprite treasure = (Sprite)treasureScene.Instance();
+                    treasure.Position = new Vector2(x * GameSettings.TileSize, y * GameSettings.TileSize);
+                    AddChild(treasure);
+                    treasure.AddToGroup("ItemGroup");
                 }
 
                 if (grid[y,x] == 6)
                 {
                     var powerUpScene = (PackedScene)ResourceLoader.Load("res://PowerUp.tscn");
+                    Sprite powerUp = (Sprite)powerUpScene.Instance();
+                    powerUp.Position = new Vector2(x * GameSettings.TileSize, y * GameSettings.TileSize);
+                    AddChild(powerUp);
+                    powerUp.AddToGroup("ItemGroup");
+                }
+                if (grid[y,x] == 7)
+                {
+                    var powerUpScene = (PackedScene)ResourceLoader.Load("res://Potion.tscn");
                     Sprite powerUp = (Sprite)powerUpScene.Instance();
                     powerUp.Position = new Vector2(x * GameSettings.TileSize, y * GameSettings.TileSize);
                     AddChild(powerUp);
@@ -108,14 +125,7 @@ public class Map : TileMap
 
     private void _on_StairEntered()
     {
-        // destroy all enemies and pickups
-        foreach (Node n in GetChildren())
-        {
-            n.QueueFree();
-        }
 
-        // clear tilemap
-        Clear();
 
         // slightly bigger dungeon
         RoomCount += 1;
