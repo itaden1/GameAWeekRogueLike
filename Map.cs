@@ -20,19 +20,10 @@ public class Map : TileMap
 
     public override void _Ready()
     {
-        CreateMap();
+        StartArea();
     }
     public void CreateMap()
     {
-        // destroy all enemies and pickups if they exist
-        foreach (Node n in GetChildren())
-        {
-            n.QueueFree();
-        }
-
-        // clear tilemap
-        Clear();
-
         Visible = true;
         DungeonGenerator generator = new DungeonGenerator(
             GameSettings.TileSize,
@@ -122,22 +113,31 @@ public class Map : TileMap
         UpdateBitmaskRegion();
         SpawnEnemies(enemyPositions);
     }
-
-    private void _on_StairEntered()
+    public void StartArea()
     {
+        // destroy all enemies and pickups if they exist
+        foreach (Node n in GetChildren())
+        {
+            n.QueueFree();
+        }
 
-
+        // clear tilemap
+        Clear();
         // slightly bigger dungeon
-        RoomCount += 1;
+        RoomCount += 5;
 
         // transition
         Visible = false;
         Timer timer = new Timer();
-        timer.WaitTime = 0.5F;
+        timer.WaitTime = 0.2F;
         timer.OneShot = true;
         AddChild(timer);
         timer.Connect("timeout", this, nameof(CreateMap));
         timer.Start();
+    }
+    private void _on_StairEntered()
+    {
+        StartArea();
     }
 
     public void SpawnEnemies(List<Vector2> enemyPositions)
@@ -146,9 +146,10 @@ public class Map : TileMap
         {
             var enemyScene = (PackedScene)ResourceLoader.Load("res://Enemy.tscn");
             Enemy enemy = (Enemy)enemyScene.Instance();
-            enemy.Position = pos;
+
+            enemy.Position = new Vector2(pos);
             AddChild(enemy);
-            enemy.NextPosition = pos;
+            enemy.NextPosition = new Vector2(pos);
 
             enemy.AddToGroup("EnemyGroup");
         }

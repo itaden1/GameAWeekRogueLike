@@ -193,11 +193,11 @@ __meta__ = {
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GUI"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 76.0
+margin_right = 73.0
 margin_bottom = 104.0
 
 [node name="HP" type="HSplitContainer" parent="CanvasLayer/GUI/VBoxContainer"]
-margin_right = 69.0
+margin_right = 66.0
 margin_bottom = 25.0
 
 [node name="HPTexture" type="TextureRect" parent="CanvasLayer/GUI/VBoxContainer/HP"]
@@ -208,14 +208,14 @@ texture = SubResource( 11 )
 [node name="HPlabel" type="Label" parent="CanvasLayer/GUI/VBoxContainer/HP"]
 margin_left = 42.0
 margin_top = 5.0
-margin_right = 69.0
+margin_right = 66.0
 margin_bottom = 19.0
 text = "100"
 script = ExtResource( 2 )
 
 [node name="Attk" type="HSplitContainer" parent="CanvasLayer/GUI/VBoxContainer"]
 margin_top = 29.0
-margin_right = 69.0
+margin_right = 66.0
 margin_bottom = 61.0
 
 [node name="AttkTexture" type="TextureRect" parent="CanvasLayer/GUI/VBoxContainer/Attk"]
@@ -226,14 +226,14 @@ texture = SubResource( 12 )
 [node name="AttkLabel" type="Label" parent="CanvasLayer/GUI/VBoxContainer/Attk"]
 margin_left = 42.0
 margin_top = 9.0
-margin_right = 69.0
+margin_right = 66.0
 margin_bottom = 23.0
 text = "5"
 script = ExtResource( 4 )
 
 [node name="Treasure" type="HSplitContainer" parent="CanvasLayer/GUI/VBoxContainer"]
 margin_top = 65.0
-margin_right = 69.0
+margin_right = 66.0
 margin_bottom = 97.0
 
 [node name="TreasureTexture" type="TextureRect" parent="CanvasLayer/GUI/VBoxContainer/Treasure"]
@@ -244,7 +244,7 @@ texture = SubResource( 13 )
 [node name="TreasureLabel" type="Label" parent="CanvasLayer/GUI/VBoxContainer/Treasure"]
 margin_left = 45.0
 margin_top = 9.0
-margin_right = 69.0
+margin_right = 66.0
 margin_bottom = 23.0
-text = "100"
+text = "0"
 script = ExtResource( 5 )

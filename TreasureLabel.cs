@@ -10,7 +10,7 @@ public class TreasureLabel : Label
     public override void _Ready()
     {            
         gameState = GetTree().Root.GetNode("GameState") as GameState;
-        Text = $"{gameState.PlayerAttackPower}";
+        Text = $"{gameState.Treasure}";
 
         gameState.Connect("UpdateGui", this, nameof(_on_UpdateGui));
     }

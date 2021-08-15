@@ -19,6 +19,10 @@ namespace GameaWeekRogueLike.State
         public void UpdatePlayerHP(int amount)
         {
             PlayerHealth = PlayerHealth + amount;
+            if (PlayerHealth > 100)
+            {
+                PlayerHealth = 100;
+            }
             EmitSignal("UpdateGui");
             if (PlayerHealth <= 0)
             {
@@ -27,6 +31,7 @@ namespace GameaWeekRogueLike.State
                 Treasure = 0;
                 GetTree().ChangeScene("res://GameOver.tscn");
             }
+
         }
         public void updatPlayerAttk(int amount)
         {
