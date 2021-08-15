@@ -18,9 +18,4 @@ public class Stairs : Sprite
             EmitSignal("StairsEntered");
         }
     }
-    public void DestroySelf()
-    {
-        QueueFree();
-    }
-
 }

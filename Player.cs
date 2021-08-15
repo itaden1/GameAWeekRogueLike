@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using GameaWeekRogueLike.Settings;
 
 namespace GameaWeekRogueLike.Entities
@@ -51,7 +52,20 @@ namespace GameaWeekRogueLike.Entities
         {
             if (inputEvent.IsActionPressed("moveRight") && _canMove)
             {
-                if (_collisionAreaEast.GetOverlappingBodies().Count == 0)
+                Godot.Collections.Array areas = _collisionAreaEast.GetOverlappingAreas();
+                List<Enemy> enemies = new List<Enemy>();
+                foreach (Area2D a in areas)
+                {
+                    if (a.Name == "HitBox")
+                    {
+                        enemies.Add((Enemy)a.GetParent());
+                    }
+                }
+                if (enemies.Count > 0)
+                {
+                    GD.Print("Atack");
+                }
+                else if (_collisionAreaEast.GetOverlappingBodies().Count == 0)
                 {
                     NextPosition = new Vector2(Position.x + GameSettings.TileSize, Position.y);
                 }
@@ -59,7 +73,20 @@ namespace GameaWeekRogueLike.Entities
             }
             else if (inputEvent.IsActionPressed("moveUp") && _canMove)
             {
-                if (_collisionAreaNorth.GetOverlappingBodies().Count == 0)
+                Godot.Collections.Array areas = _collisionAreaNorth.GetOverlappingAreas();
+                List<Enemy> enemies = new List<Enemy>();
+                foreach (Area2D a in areas)
+                {
+                    if (a.Name == "HitBox")
+                    {
+                        enemies.Add((Enemy)a.GetParent());
+                    }
+                }
+                if (_collisionAreaNorth.GetOverlappingAreas().Count > 0)
+                {
+                    GD.Print("Atack");
+                }
+                else if (_collisionAreaNorth.GetOverlappingBodies().Count == 0)
                 {
                     NextPosition = new Vector2(Position.x, Position.y - GameSettings.TileSize);
                 }
@@ -67,7 +94,21 @@ namespace GameaWeekRogueLike.Entities
             }
             else if (inputEvent.IsActionPressed("moveLeft") && _canMove)
             {
-                if (_collisionAreaWest.GetOverlappingBodies().Count == 0)
+                Godot.Collections.Array areas = _collisionAreaWest.GetOverlappingAreas();
+                List<Enemy> enemies = new List<Enemy>();
+                foreach (Area2D a in areas)
+                {
+                    if (a.Name == "HitBox")
+                    {
+                        enemies.Add((Enemy)a.GetParent());
+                    }
+
+                }
+                if (enemies.Count > 0)
+                {
+                    GD.Print("Atack");
+                }
+                else if (_collisionAreaWest.GetOverlappingBodies().Count == 0)
                 {
                     NextPosition = new Vector2(Position.x - GameSettings.TileSize, Position.y);
                 }
@@ -75,18 +116,26 @@ namespace GameaWeekRogueLike.Entities
             }
             else if (inputEvent.IsActionPressed("moveDown") && _canMove)
             {
-                if (_collisionAreaSouth.GetOverlappingBodies().Count == 0)
+                Godot.Collections.Array areas = _collisionAreaSouth.GetOverlappingAreas();
+                List<Enemy> enemies = new List<Enemy>();
+                foreach (Area2D a in areas)
+                {
+                    if (a.Name == "HitBox")
+                    {
+                        enemies.Add((Enemy)a.GetParent());
+                    }
+                }
+                if (enemies.Count > 0)
+                {
+                    GD.Print("Atack");
+                }
+                else if (_collisionAreaSouth.GetOverlappingBodies().Count == 0)
                 {
                     NextPosition = new Vector2(Position.x, Position.y + GameSettings.TileSize);
                 }
                 EmitSignal("PlayerMoved");
 
             }
-        }
-        public void DestroySelf()
-        {
-            GD.Print("player destrucor called");
-            QueueFree();
         }
     }
 }

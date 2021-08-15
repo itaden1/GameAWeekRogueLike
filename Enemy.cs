@@ -26,13 +26,14 @@ namespace GameaWeekRogueLike.Entities
             private Area2D _collisionAreaNorth;
 
             public Vector2 NextPosition;
+            private Player player;
         public override void _Ready()
         {
             _collisionAreaEast = (Area2D)GetNode("CollisionAreaEast");
             _collisionAreaSouth = (Area2D)GetNode("CollisionAreaSouth");
             _collisionAreaWest = (Area2D)GetNode("CollisionAreaWest");
             _collisionAreaNorth = (Area2D)GetNode("CollisionAreaNorth");
-            Sprite player = (Sprite)GetParent().GetNode("Player");
+            player = (Player)GetParent().GetNode("Player");
 
             player.Connect("PlayerMoved", this, nameof(_on_PlayerMoved));
 
@@ -57,7 +58,25 @@ namespace GameaWeekRogueLike.Entities
             bool validChoice = false;
             while (!validChoice)
             {
-                int _choice = _random.Next(0,4);
+                GD.Print("Fucck!");
+                List<int> _choices = new List<int>();
+                int playerDistance = (int)Position.DistanceTo(player.Position);
+                GD.Print($"D-{playerDistance}");
+                if (playerDistance < 5 * GameSettings.TileSize)
+                {
+                    if (Position.x < player.Position.x) _choices.Add(2);
+                    if (Position.x > player.Position.x) _choices.Add(3);
+                    if (Position.y < player.Position.y) _choices.Add(1);
+                    if (Position.y > player.Position.y) _choices.Add(0);
+                }
+                else 
+                {
+                    _choices.AddRange(new List<int>(){0,1,2,3});
+                }
+                GD.Print(_choices.Count);
+                int _rnd = _random.Next(0, _choices.Count - 1);
+                int _choice = _choices[_rnd];
+                GD.Print(_choice);
                 if (_choice == (int)Direction.North)
                 {
                     if (_collisionAreaNorth.GetOverlappingBodies().Count == 0)
@@ -82,7 +101,7 @@ namespace GameaWeekRogueLike.Entities
                         validChoice = true;
                     }
                 }
-                else 
+                else if (_choice == (int)Direction.West)
                 {
                     if (_collisionAreaWest.GetOverlappingBodies().Count == 0)
                     {
@@ -90,12 +109,8 @@ namespace GameaWeekRogueLike.Entities
                         validChoice = true;
                     }
                 }
+                break;
             }
-        }
-        public void DestroySelf()
-        {
-            GD.Print("destrucor called");
-            QueueFree();
         }
     }
 }

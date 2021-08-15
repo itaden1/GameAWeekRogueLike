@@ -109,21 +109,25 @@ public class Map : TileMap
     private void _on_StairEntered()
     {
         // destroy all enemies and pickups
-        GetTree().CallGroup("PlayerGroup", "DestroySelf");
-        GetTree().CallGroup("EnemyGroup", "DestroySelf");
-        GetTree().CallGroup("ItemGroup", "DestroySelf");
+        foreach (Node n in GetChildren())
+        {
+            n.QueueFree();
+        }
 
         // clear tilemap
         Clear();
-        RoomCount += 5;
+
+        // slightly bigger dungeon
+        RoomCount += 1;
+
+        // transition
         Visible = false;
         Timer timer = new Timer();
-        timer.WaitTime = 2;
+        timer.WaitTime = 0.5F;
         timer.OneShot = true;
         AddChild(timer);
         timer.Connect("timeout", this, nameof(CreateMap));
         timer.Start();
-        // regenerate level
     }
 
     public void SpawnEnemies(List<Vector2> enemyPositions)

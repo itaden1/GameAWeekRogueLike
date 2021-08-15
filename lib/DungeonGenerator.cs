@@ -160,9 +160,9 @@ namespace GameaWeekRogueLike.dungeonGeneration
         private void AddEnemiesAndItems(int[,] grid, Vector2 vec)
         {
             int roll = _random.Next(1, 100);
-            if (roll >=96) grid[(int)vec.y, (int)vec.x] = 4;
-            else if (roll >= 95) grid[(int)vec.y, (int)vec.x] = 5;
-            else if (roll >= 93) grid[(int)vec.y, (int)vec.x] = 6;
+            if (roll >=90) grid[(int)vec.y, (int)vec.x] = 4;
+            else if (roll >= 85) grid[(int)vec.y, (int)vec.x] = 5;
+            else if (roll >= 83) grid[(int)vec.y, (int)vec.x] = 6;
             else grid[(int)vec.y, (int)vec.x] = 1;
         }
     }
