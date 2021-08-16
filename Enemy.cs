@@ -11,6 +11,7 @@ namespace GameaWeekRogueLike.Entities
     {
         [Export]
         public float Speed = 100;
+        private AudioStreamPlayer2D _monsterSound;
         protected Random _random = new Random();
         enum Direction : int
         {
@@ -39,6 +40,8 @@ namespace GameaWeekRogueLike.Entities
 
             player.Connect("PlayerMoved", this, nameof(_on_PlayerMoved));
             gameState = GetTree().Root.GetNode("GameState");
+
+            _monsterSound = (AudioStreamPlayer2D)GetNode("MonsterSound");
         }
 
         public void removeHP(int amount)
@@ -98,6 +101,7 @@ namespace GameaWeekRogueLike.Entities
                             Position = new Vector2(Position.x, Position.y - GameSettings.TileSize/2);
                             attacking = true;
                             (gameState as GameState).UpdatePlayerHP(-5);
+                            _monsterSound.Play();
                             break;
                         }
                     }
@@ -119,6 +123,7 @@ namespace GameaWeekRogueLike.Entities
                             Position = new Vector2(Position.x, Position.y + GameSettings.TileSize/2);
                             attacking = true;
                             (gameState as GameState).UpdatePlayerHP(-5);
+                            _monsterSound.Play();
                             break;
                         }
                     }
@@ -140,6 +145,7 @@ namespace GameaWeekRogueLike.Entities
                             Position = new Vector2(Position.x  + GameSettings.TileSize/2, Position.y);
                             attacking = true;
                             (gameState as GameState).UpdatePlayerHP(-5);
+                            _monsterSound.Play();
                             break;
                         }
                     }
@@ -161,6 +167,7 @@ namespace GameaWeekRogueLike.Entities
                             Position = new Vector2(Position.x - GameSettings.TileSize/2, Position.y);
                             (gameState as GameState).UpdatePlayerHP(-5);
                             attacking = true;
+                            _monsterSound.Play();
                             break;
                         }
                     }

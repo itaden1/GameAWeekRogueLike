@@ -17,6 +17,11 @@ namespace GameaWeekRogueLike.Entities
         private Area2D _collisionAreaSouth;
         private Area2D _collisionAreaWest;
         private Area2D _collisionAreaNorth;
+        private Area2D _playerHitBox;
+
+        private AudioStreamPlayer2D _attackSound;
+        private AudioStreamPlayer2D _footStepSound;
+        private AudioStreamPlayer2D _itemSound;
 
         public Vector2 NextPosition;
         private bool _canMove = true;
@@ -31,8 +36,12 @@ namespace GameaWeekRogueLike.Entities
             _collisionAreaSouth = (Area2D)GetNode("CollisionAreaSouth");
             _collisionAreaWest = (Area2D)GetNode("CollisionAreaWest");
             _collisionAreaNorth = (Area2D)GetNode("CollisionAreaNorth");
+            _playerHitBox = (Area2D)GetNode("PlayerHitBox");
             gameState = GetTree().Root.GetNode("GameState") as GameState;
 
+            _attackSound = (AudioStreamPlayer2D)GetNode("AttackSound");
+            _footStepSound = (AudioStreamPlayer2D)GetNode("FootStepSound");
+            _itemSound  = (AudioStreamPlayer2D)GetNode("ItemSound");
         }
 
         public override void _Process(float delta)
@@ -50,6 +59,11 @@ namespace GameaWeekRogueLike.Entities
                 _canMove = true;
                 Position = NextPosition;
             }
+            if (_playerHitBox.GetOverlappingAreas().Count > 0)
+            {
+                _itemSound.Play();
+            }
+
         }
         public override void _Input(InputEvent inputEvent)
         {
@@ -67,12 +81,14 @@ namespace GameaWeekRogueLike.Entities
                 if (enemies.Count > 0)
                 {
                     GD.Print("Atack");
+                    _attackSound.Play();
                     NextPosition = new Vector2(Position.x, Position.y);
                     Position = new Vector2(Position.x + GameSettings.TileSize/2, Position.y);
                     enemies[0].removeHP(gameState.PlayerAttackPower);
                 }
                 else if (_collisionAreaEast.GetOverlappingBodies().Count == 0)
                 {
+                    _footStepSound.Play();
                     NextPosition = new Vector2(Position.x + GameSettings.TileSize, Position.y);
                 }
                 EmitSignal("PlayerMoved");
@@ -91,12 +107,14 @@ namespace GameaWeekRogueLike.Entities
                 if (enemies.Count > 0)
                 {
                     GD.Print("Atack");
+                    _attackSound.Play();
                     NextPosition = new Vector2(Position.x, Position.y);
                     Position = new Vector2(Position.x, Position.y - GameSettings.TileSize/2);
                     enemies[0].removeHP(gameState.PlayerAttackPower);
                 }
                 else if (_collisionAreaNorth.GetOverlappingBodies().Count == 0)
                 {
+                    _footStepSound.Play();
                     NextPosition = new Vector2(Position.x, Position.y - GameSettings.TileSize);
                 }
                 EmitSignal("PlayerMoved");
@@ -116,12 +134,14 @@ namespace GameaWeekRogueLike.Entities
                 if (enemies.Count > 0)
                 {
                     GD.Print("Atack");
+                    _attackSound.Play();
                     NextPosition = new Vector2(Position.x, Position.y);
                     Position = new Vector2(Position.x - GameSettings.TileSize/2, Position.y);
                     enemies[0].removeHP(gameState.PlayerAttackPower);
                 }
                 else if (_collisionAreaWest.GetOverlappingBodies().Count == 0)
                 {
+                    _footStepSound.Play();
                     NextPosition = new Vector2(Position.x - GameSettings.TileSize, Position.y);
                 }
                 EmitSignal("PlayerMoved");
@@ -140,12 +160,14 @@ namespace GameaWeekRogueLike.Entities
                 if (enemies.Count > 0)
                 {
                     GD.Print("Atack");
+                    _attackSound.Play();
                     NextPosition = new Vector2(Position.x, Position.y);
                     Position = new Vector2(Position.x, Position.y + GameSettings.TileSize/2);
                     enemies[0].removeHP(gameState.PlayerAttackPower);
                 }
                 else if (_collisionAreaSouth.GetOverlappingBodies().Count == 0)
                 {
+                    _footStepSound.Play();
                     NextPosition = new Vector2(Position.x, Position.y + GameSettings.TileSize);
                 }
                 EmitSignal("PlayerMoved");

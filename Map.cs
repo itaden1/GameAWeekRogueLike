@@ -102,11 +102,11 @@ public class Map : TileMap
                 }
                 if (grid[y,x] == 7)
                 {
-                    var powerUpScene = (PackedScene)ResourceLoader.Load("res://Potion.tscn");
-                    Sprite powerUp = (Sprite)powerUpScene.Instance();
-                    powerUp.Position = new Vector2(x * GameSettings.TileSize, y * GameSettings.TileSize);
-                    AddChild(powerUp);
-                    powerUp.AddToGroup("ItemGroup");
+                    var potionScene = (PackedScene)ResourceLoader.Load("res://Potion.tscn");
+                    Sprite potion = (Sprite)potionScene.Instance();
+                    potion.Position = new Vector2(x * GameSettings.TileSize, y * GameSettings.TileSize);
+                    AddChild(potion);
+                    potion.AddToGroup("ItemGroup");
                 }
             }
         }

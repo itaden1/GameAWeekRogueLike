@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/radakan - moldan chase over (failure).ogg-e73acb353e94c5959d7b86247d0267f4.oggstr"
+
+[deps]
+
+source_file="res://assets/radakan - moldan chase over (failure).ogg"
+dest_files=[ "res://.import/radakan - moldan chase over (failure).ogg-e73acb353e94c5959d7b86247d0267f4.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
