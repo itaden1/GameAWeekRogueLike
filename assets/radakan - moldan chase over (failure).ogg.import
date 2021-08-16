@@ -11,5 +11,5 @@ dest_files=[ "res://.import/radakan - moldan chase over (failure).ogg-e73acb353e
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

@@ -38,10 +38,16 @@ namespace GameaWeekRogueLike.Entities
             _collisionAreaNorth = (Area2D)GetNode("CollisionAreaNorth");
             _playerHitBox = (Area2D)GetNode("PlayerHitBox");
             gameState = GetTree().Root.GetNode("GameState") as GameState;
+            gameState.Connect("UpdateGui", this, nameof(_on_PickupCollected));
 
             _attackSound = (AudioStreamPlayer2D)GetNode("AttackSound");
             _footStepSound = (AudioStreamPlayer2D)GetNode("FootStepSound");
             _itemSound  = (AudioStreamPlayer2D)GetNode("ItemSound");
+        }
+
+        private void _on_PickupCollected()
+        {
+            _itemSound.Play();
         }
 
         public override void _Process(float delta)
@@ -59,11 +65,6 @@ namespace GameaWeekRogueLike.Entities
                 _canMove = true;
                 Position = NextPosition;
             }
-            if (_playerHitBox.GetOverlappingAreas().Count > 0)
-            {
-                _itemSound.Play();
-            }
-
         }
         public override void _Input(InputEvent inputEvent)
         {
