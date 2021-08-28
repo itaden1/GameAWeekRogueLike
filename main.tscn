@@ -6,7 +6,7 @@
 
 [node name="World" type="Node2D"]
 
-[node name="TileMap" type="TileMap" parent="." groups=[
+[node name="Map" type="TileMap" parent="." groups=[
 "EnemyGroup",
 "ItemGroup",
 "PlayerGroup",

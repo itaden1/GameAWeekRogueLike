@@ -28,6 +28,7 @@ namespace GameaWeekRogueLike.Entities
             public Vector2 NextPosition;
             private Player player;
             public int HP = 20;
+            public int Attk = 5;
 
             private Node gameState;
         public override void _Ready()
@@ -36,7 +37,9 @@ namespace GameaWeekRogueLike.Entities
             _collisionAreaSouth = (Area2D)GetNode("CollisionAreaSouth");
             _collisionAreaWest = (Area2D)GetNode("CollisionAreaWest");
             _collisionAreaNorth = (Area2D)GetNode("CollisionAreaNorth");
-            player = (Player)GetParent().GetNode("Player");
+            player = (Player)GetTree().Root.GetNode("World/Map/Player");
+
+            NextPosition = Position;
 
             player.Connect("PlayerMoved", this, nameof(_on_PlayerMoved));
             gameState = GetTree().Root.GetNode("GameState");
@@ -44,7 +47,7 @@ namespace GameaWeekRogueLike.Entities
             _monsterSound = (AudioStreamPlayer2D)GetNode("MonsterSound");
         }
 
-        public void removeHP(int amount)
+        public virtual void removeHP(int amount)
         {
             HP = HP - amount;
             if (HP <= 0 )
@@ -96,11 +99,10 @@ namespace GameaWeekRogueLike.Entities
                     {
                         if (a.GetParent().Name == "Player")
                         {
-                            GD.Print("Atack p");
                             NextPosition = new Vector2(Position.x, Position.y);
                             Position = new Vector2(Position.x, Position.y - GameSettings.TileSize/2);
                             attacking = true;
-                            (gameState as GameState).UpdatePlayerHP(-5);
+                            (gameState as GameState).UpdatePlayerHP(-Attk);
                             _monsterSound.Play();
                             break;
                         }
@@ -118,11 +120,10 @@ namespace GameaWeekRogueLike.Entities
                     {
                         if (a.GetParent().Name == "Player")
                         {
-                            GD.Print("Atack p");
                             NextPosition = new Vector2(Position.x, Position.y);
                             Position = new Vector2(Position.x, Position.y + GameSettings.TileSize/2);
                             attacking = true;
-                            (gameState as GameState).UpdatePlayerHP(-5);
+                            (gameState as GameState).UpdatePlayerHP(-Attk);
                             _monsterSound.Play();
                             break;
                         }
@@ -140,11 +141,10 @@ namespace GameaWeekRogueLike.Entities
                     {
                         if (a.GetParent().Name == "Player")
                         {
-                            GD.Print("Atack p");
                             NextPosition = new Vector2(Position.x, Position.y);
                             Position = new Vector2(Position.x  + GameSettings.TileSize/2, Position.y);
                             attacking = true;
-                            (gameState as GameState).UpdatePlayerHP(-5);
+                            (gameState as GameState).UpdatePlayerHP(-Attk);
                             _monsterSound.Play();
                             break;
                         }
@@ -162,10 +162,9 @@ namespace GameaWeekRogueLike.Entities
                     {
                         if (a.GetParent().Name == "Player")
                         {
-                            GD.Print("Atack p");
                             NextPosition = new Vector2(Position.x, Position.y);
                             Position = new Vector2(Position.x - GameSettings.TileSize/2, Position.y);
-                            (gameState as GameState).UpdatePlayerHP(-5);
+                            (gameState as GameState).UpdatePlayerHP(-Attk);
                             attacking = true;
                             _monsterSound.Play();
                             break;

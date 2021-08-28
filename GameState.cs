@@ -15,6 +15,8 @@ namespace GameaWeekRogueLike.State
         public int PlayerAttackPower = 5;
         public int Treasure = 0;
 
+        public int WinState = 100;
+
         public override void _Ready()
         {
             

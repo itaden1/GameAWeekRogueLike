@@ -75,28 +75,36 @@ text = "Quit"
 flat = true
 
 [node name="IntroDialogueContainer" type="AspectRatioContainer" parent="."]
-visible = false
-margin_left = 1.0
-margin_top = 111.0
-margin_right = 1024.0
-margin_bottom = 506.0
+anchor_left = 0.001
+anchor_top = 0.185
+anchor_right = 1.0
+anchor_bottom = 0.843
+margin_left = -0.024
+margin_bottom = 0.199982
+size_flags_horizontal = 7
+size_flags_vertical = 4
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="IntroDialogue" type="RichTextLabel" parent="IntroDialogueContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="IntroDialogueContainer"]
 margin_left = 314.0
 margin_right = 709.0
 margin_bottom = 395.0
+size_flags_vertical = 5
+
+[node name="IntroDialogue" type="RichTextLabel" parent="IntroDialogueContainer/VBoxContainer"]
+margin_right = 395.0
+margin_bottom = 334.0
+size_flags_vertical = 3
 custom_fonts/normal_font = ExtResource( 3 )
 text = "The evil wizard Fladnag has stolen the kings treasure and hidden it in his wizardly tower...
 Not knowing what evils you will face you set off to retrieve the king's riches!"
 scroll_active = false
 
-[node name="BeginButton" type="Button" parent="IntroDialogueContainer"]
-margin_left = 314.0
+[node name="BeginButton" type="Button" parent="IntroDialogueContainer/VBoxContainer"]
 margin_top = 338.0
-margin_right = 709.0
+margin_right = 395.0
 margin_bottom = 395.0
 size_flags_vertical = 8
 custom_fonts/font = ExtResource( 3 )

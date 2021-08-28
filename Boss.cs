@@ -5,22 +5,24 @@ using GameaWeekRogueLike.Entities;
 public class Boss : Enemy
 {
 
-    public new int HP = 200;
+    public new int HP = 100;
+    public new int Attk = 1;
 
-    [Export]
-    public IDoor Gate;
+
+    [Signal]
+    public delegate void BossDied();
 
     public override void _Ready()
     {
         base._Ready();
         NextPosition = Position;
     }
-    public new void removeHP(int amount)
+    public override void removeHP(int amount)
     {
         HP = HP - amount;
         if (HP <= 0 )
         {
-            Gate.Open();
+            EmitSignal(nameof(BossDied));
             QueueFree();
         }
     }

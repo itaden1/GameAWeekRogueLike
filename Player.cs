@@ -31,7 +31,6 @@ namespace GameaWeekRogueLike.Entities
         public GameState gameState;
         public override void _Ready()
         {
-            GD.Print("ready");
             _collisionAreaEast = (Area2D)GetNode("CollisionAreaEast");
             _collisionAreaSouth = (Area2D)GetNode("CollisionAreaSouth");
             _collisionAreaWest = (Area2D)GetNode("CollisionAreaWest");
@@ -83,7 +82,6 @@ namespace GameaWeekRogueLike.Entities
                 }
                 if (enemies.Count > 0)
                 {
-                    GD.Print("Atack");
                     _attackSound.Play();
                     NextPosition = new Vector2(Position.x, Position.y);
                     Position = new Vector2(Position.x + GameSettings.TileSize/2, Position.y);
@@ -109,7 +107,6 @@ namespace GameaWeekRogueLike.Entities
                 }
                 if (enemies.Count > 0)
                 {
-                    GD.Print("Atack");
                     _attackSound.Play();
                     NextPosition = new Vector2(Position.x, Position.y);
                     Position = new Vector2(Position.x, Position.y - GameSettings.TileSize/2);
@@ -136,7 +133,6 @@ namespace GameaWeekRogueLike.Entities
                 }
                 if (enemies.Count > 0)
                 {
-                    GD.Print("Atack");
                     _attackSound.Play();
                     NextPosition = new Vector2(Position.x, Position.y);
                     Position = new Vector2(Position.x - GameSettings.TileSize/2, Position.y);
@@ -162,7 +158,6 @@ namespace GameaWeekRogueLike.Entities
                 }
                 if (enemies.Count > 0)
                 {
-                    GD.Print("Atack");
                     _attackSound.Play();
                     NextPosition = new Vector2(Position.x, Position.y);
                     Position = new Vector2(Position.x, Position.y + GameSettings.TileSize/2);

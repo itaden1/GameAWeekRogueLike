@@ -5,7 +5,7 @@ using GameaWeekRogueLike.State;
 
 public class Treasure : Sprite
 {
-    public int Value = 20;
+    public int Value = 10;
     public override void _Ready()
     {
         Area2D area = (Area2D)GetNode("Area2D");

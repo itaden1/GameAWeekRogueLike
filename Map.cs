@@ -22,9 +22,9 @@ public class Map : TileMap
     [Export]
     public int maxTreasure = 3;
     [Export]
-    public int maxPotions = 3;
+    public int maxPotions = 4;
     [Export]
-    public int maxPowerups = 2;
+    public int maxPowerups = 3;
 
 
     public override void _Ready()

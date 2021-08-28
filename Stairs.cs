@@ -20,7 +20,7 @@ public class Stairs : Sprite
     {
         if (area.Name == "PlayerHitBox")
         {
-            if (gameState.Treasure >= 20)
+            if (gameState.Treasure >= gameState.WinState)
             {
                 GetTree().ChangeScene("res://BossFight.tscn");
             }

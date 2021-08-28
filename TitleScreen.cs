@@ -9,7 +9,7 @@ public class TitleScreen : Control
     {
         Button startButton = (Button)GetNode("MainMenuContainer/VSplitContainer/StartButton");
         Button quitButton = (Button)GetNode("MainMenuContainer/VSplitContainer/QuitButton");
-        Button beginButton = (Button)GetNode("IntroDialogueContainer/BeginButton");
+        Button beginButton = (Button)GetNode("IntroDialogueContainer/VBoxContainer/BeginButton");
 
         buttonClick = (AudioStreamPlayer)GetNode("ClickEffect");
 
