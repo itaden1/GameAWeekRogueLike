@@ -43,6 +43,8 @@ namespace GameaWeekRogueLike.Entities
             _attackSound = (AudioStreamPlayer2D)GetNode("AttackSound");
             _footStepSound = (AudioStreamPlayer2D)GetNode("FootStepSound");
             _itemSound  = (AudioStreamPlayer2D)GetNode("ItemSound");
+
+            NextPosition = Position;
         }
 
         private void _on_PickupCollected()

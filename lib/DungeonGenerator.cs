@@ -161,10 +161,7 @@ namespace GameaWeekRogueLike.dungeonGeneration
         {
             int roll = _random.Next(1, 100);
             if (roll >=93) grid[(int)vec.y, (int)vec.x] = 4; // enemy
-            else if (roll >= 92) grid[(int)vec.y, (int)vec.x] = 5; //Treasure
-            else if (roll >= 90) grid[(int)vec.y, (int)vec.x] = 6; //PowerUp
-            else if (roll >= 88) grid[(int)vec.y, (int)vec.x] = 7; //Potion
-            else grid[(int)vec.y, (int)vec.x] = 1;
+            else grid[(int)vec.y, (int)vec.x] = 5;
         }
     }
 }

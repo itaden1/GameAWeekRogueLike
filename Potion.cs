@@ -4,7 +4,7 @@ using GameaWeekRogueLike.State;
 
 public class Potion : Sprite
 {
-    public int Value = 10;
+    public int Value = 20;
     public override void _Ready()
     {
         Area2D area = (Area2D)GetNode("Area2D");

@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using GameaWeekRogueLike.State;
 
 public class GameOver : Control
 {
@@ -14,7 +15,11 @@ public class GameOver : Control
         buttonClick = (AudioStreamPlayer)GetNode("ClickEffect");
     }
     async public void _on_ExitbuttonPressed()
-    {        
+    {
+        GameState gameState = GetTree().Root.GetNode("GameState") as GameState;
+        gameState.PlayerHealth = 100;
+        gameState.PlayerAttackPower = 5;
+        gameState.Treasure = 0;
         buttonClick.Play();
         await ToSignal(buttonClick, "finished");
         GetTree().ChangeScene("res://TitleScreen.tscn");

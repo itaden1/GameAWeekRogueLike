@@ -45,13 +45,6 @@ namespace GameaWeekRogueLike.State
         {
             Treasure += amount;
             EmitSignal("UpdateGui");
-            if (Treasure >= 200)
-            {
-                PlayerHealth = 100;
-                PlayerAttackPower = 5;
-                Treasure = 0;
-                GetTree().ChangeScene("res://YouWinScreen.tscn");
-            }
         }
     }
 }

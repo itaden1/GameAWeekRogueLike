@@ -1,0 +1,124 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://TreasureLabel.cs" type="Script" id=1]
+[ext_resource path="res://HPlabel.cs" type="Script" id=2]
+[ext_resource path="res://AttkLabel.cs" type="Script" id=3]
+[ext_resource path="res://assets/miniroguelike-8x8.png" type="Texture" id=4]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 4 )
+region = Rect2( 192, 194, 30, 25 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 4 )
+region = Rect2( 193, 128, 30, 32 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 4 )
+region = Rect2( 287, 96, 33, 32 )
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="Menu" type="PanelContainer" parent="."]
+visible = false
+margin_left = 390.0
+margin_top = 239.0
+margin_right = 689.0
+margin_bottom = 395.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 292.0
+margin_bottom = 149.0
+
+[node name="Label" type="Label" parent="Menu/VBoxContainer"]
+margin_right = 285.0
+margin_bottom = 44.0
+size_flags_vertical = 3
+text = "Really Quit?"
+align = 1
+valign = 1
+
+[node name="YesButton" type="Button" parent="Menu/VBoxContainer"]
+margin_top = 48.0
+margin_right = 285.0
+margin_bottom = 93.0
+size_flags_vertical = 3
+text = "Yes"
+
+[node name="CancelButton" type="Button" parent="Menu/VBoxContainer"]
+margin_top = 97.0
+margin_right = 285.0
+margin_bottom = 142.0
+size_flags_vertical = 3
+text = "No"
+
+[node name="GUI" type="PanelContainer" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 73.0
+margin_bottom = 104.0
+
+[node name="HP" type="HSplitContainer" parent="GUI/VBoxContainer"]
+margin_right = 66.0
+margin_bottom = 25.0
+
+[node name="HPTexture" type="TextureRect" parent="GUI/VBoxContainer/HP"]
+margin_right = 30.0
+margin_bottom = 25.0
+texture = SubResource( 1 )
+
+[node name="HPlabel" type="Label" parent="GUI/VBoxContainer/HP"]
+margin_left = 42.0
+margin_top = 5.0
+margin_right = 66.0
+margin_bottom = 19.0
+text = "100"
+script = ExtResource( 2 )
+
+[node name="Attk" type="HSplitContainer" parent="GUI/VBoxContainer"]
+margin_top = 29.0
+margin_right = 66.0
+margin_bottom = 61.0
+
+[node name="AttkTexture" type="TextureRect" parent="GUI/VBoxContainer/Attk"]
+margin_right = 30.0
+margin_bottom = 32.0
+texture = SubResource( 2 )
+
+[node name="AttkLabel" type="Label" parent="GUI/VBoxContainer/Attk"]
+margin_left = 42.0
+margin_top = 9.0
+margin_right = 66.0
+margin_bottom = 23.0
+text = "5"
+script = ExtResource( 3 )
+
+[node name="Treasure" type="HSplitContainer" parent="GUI/VBoxContainer"]
+margin_top = 65.0
+margin_right = 66.0
+margin_bottom = 97.0
+
+[node name="TreasureTexture" type="TextureRect" parent="GUI/VBoxContainer/Treasure"]
+margin_right = 33.0
+margin_bottom = 32.0
+texture = SubResource( 3 )
+
+[node name="TreasureLabel" type="Label" parent="GUI/VBoxContainer/Treasure"]
+margin_left = 45.0
+margin_top = 9.0
+margin_right = 66.0
+margin_bottom = 23.0
+text = "0"
+script = ExtResource( 1 )

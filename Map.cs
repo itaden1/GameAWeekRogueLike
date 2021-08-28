@@ -17,6 +17,15 @@ public class Map : TileMap
     public int MaxRoomSize;
     [Export]
     public int MinRoomSize;
+    protected Random _random = new Random();
+
+    [Export]
+    public int maxTreasure = 3;
+    [Export]
+    public int maxPotions = 3;
+    [Export]
+    public int maxPowerups = 2;
+
 
     public override void _Ready()
     {
@@ -39,6 +48,7 @@ public class Map : TileMap
         List<Vector2> enemyPositions = new List<Vector2>();
 
         int tile = TileSet.FindTileByName("autotileset");
+        List<Vector2> tiles = new List<Vector2>();
 
         var cellArray = new List<Vector2>();
 
@@ -50,6 +60,10 @@ public class Map : TileMap
                 {
                     SetCell(x, y, tile);
                     cellArray.Add(new Vector2(x, y));
+                    if (grid[y,x] == 5)
+                    {
+                        tiles.Add(new Vector2(x,y));
+                    }
                 }
 
                 if (grid[y,x] == 3)
@@ -77,41 +91,15 @@ public class Map : TileMap
                     player.AddToGroup("PlayerGroup");
                 }
 
-
                 if (grid[y,x] == 4)
                 {
                     enemyPositions.Add(new Vector2(x * GameSettings.TileSize, y * GameSettings.TileSize));
-                }
-
-                if (grid[y,x] == 5)
-                {
-                    var treasureScene = (PackedScene)ResourceLoader.Load("res://Treasure.tscn");
-                    Sprite treasure = (Sprite)treasureScene.Instance();
-                    treasure.Position = new Vector2(x * GameSettings.TileSize, y * GameSettings.TileSize);
-                    AddChild(treasure);
-                    treasure.AddToGroup("ItemGroup");
-                }
-
-                if (grid[y,x] == 6)
-                {
-                    var powerUpScene = (PackedScene)ResourceLoader.Load("res://PowerUp.tscn");
-                    Sprite powerUp = (Sprite)powerUpScene.Instance();
-                    powerUp.Position = new Vector2(x * GameSettings.TileSize, y * GameSettings.TileSize);
-                    AddChild(powerUp);
-                    powerUp.AddToGroup("ItemGroup");
-                }
-                if (grid[y,x] == 7)
-                {
-                    var potionScene = (PackedScene)ResourceLoader.Load("res://Potion.tscn");
-                    Sprite potion = (Sprite)potionScene.Instance();
-                    potion.Position = new Vector2(x * GameSettings.TileSize, y * GameSettings.TileSize);
-                    AddChild(potion);
-                    potion.AddToGroup("ItemGroup");
                 }
             }
         }
         UpdateBitmaskRegion();
         SpawnEnemies(enemyPositions);
+        PlaceItems(tiles);
     }
     public void StartArea()
     {
@@ -123,6 +111,7 @@ public class Map : TileMap
 
         // clear tilemap
         Clear();
+
         // slightly bigger dungeon
         RoomCount += 5;
 
@@ -140,6 +129,38 @@ public class Map : TileMap
         StartArea();
     }
 
+    public void PlaceItems(List<Vector2> tilePositions)
+    {
+        List<Vector2> takenPositions = new List<Vector2>();
+        int treasureCount = _random.Next(0, maxTreasure);
+        int potionCount = _random.Next(0, maxPotions);
+        int swordCount = _random.Next(0, maxPowerups);
+
+        takenPositions = PlaceItem("res://Treasure.tscn", tilePositions, takenPositions, treasureCount);
+        takenPositions = PlaceItem("res://Potion.tscn", tilePositions, takenPositions, potionCount);
+        takenPositions = PlaceItem("res://PowerUp.tscn", tilePositions, takenPositions, swordCount);
+    }
+
+    private List<Vector2> PlaceItem(string itemScenePath, List<Vector2> positions, List<Vector2> takenPositions, int count)
+    {      
+        while (count > 0)
+        {
+            // pick random tile
+            Vector2 tile = positions[_random.Next(0, positions.Count)];
+            if (!takenPositions.Contains(tile))
+            {
+                var scene = (PackedScene)ResourceLoader.Load(itemScenePath);
+                Sprite instance = (Sprite)scene.Instance();
+                instance.Position = new Vector2(tile.x * GameSettings.TileSize, tile.y * GameSettings.TileSize);
+                AddChild(instance);
+                instance.AddToGroup("ItemGroup");
+                takenPositions.Add(tile);
+                count --;
+            }
+        }
+        return takenPositions;
+
+    }
     public void SpawnEnemies(List<Vector2> enemyPositions)
     {
         foreach(Vector2 pos in enemyPositions)
@@ -154,5 +175,4 @@ public class Map : TileMap
             enemy.AddToGroup("EnemyGroup");
         }
     }
-
 }
