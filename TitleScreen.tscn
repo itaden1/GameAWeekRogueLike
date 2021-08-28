@@ -75,6 +75,7 @@ text = "Quit"
 flat = true
 
 [node name="IntroDialogueContainer" type="AspectRatioContainer" parent="."]
+visible = false
 anchor_left = 0.001
 anchor_top = 0.185
 anchor_right = 1.0
